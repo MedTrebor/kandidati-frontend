@@ -6,9 +6,12 @@ import { Subscription } from 'rxjs'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 import { CandidateService } from '../service/candidate.service'
 import { Candidate } from '../model/candidate'
+import { EditCandidateComponent } from '../edit-candidate/edit-candidate.component'
 
 @Component({
     selector: 'app-infinite-table',
@@ -33,6 +36,8 @@ export class InfiniteTableComponent implements OnDestroy {
 
     constructor(
         public candidateService: CandidateService,
+        private dialog: MatDialog,
+        private snackbar: MatSnackBar,
         breakpointObserver: BreakpointObserver,
     ) {
         this.breakpointSub = breakpointObserver
@@ -59,11 +64,25 @@ export class InfiniteTableComponent implements OnDestroy {
         this.expendedCandidate = this.isExpended(candidate) ? null : candidate
     }
 
-    isExpended(candidate: Candidate) {
-        return candidate === this.expendedCandidate
+    editHandler(candidate: Candidate) {
+        this.expendedCandidate = null
+        this.dialog
+            .open(EditCandidateComponent, {
+                data: { edit: true, candidate },
+            })
+            .afterClosed()
+            .subscribe((data?: { success: boolean }) => {
+                if (!data) return
+                const success = data.success ? 'uspešno' : 'neuspešno'
+                this.snackbar.open(`Kandidat je ${success} ažuriran.`)
+            })
     }
 
     ngOnDestroy(): void {
         this.breakpointSub.unsubscribe()
+    }
+
+    private isExpended(candidate: Candidate) {
+        return candidate === this.expendedCandidate
     }
 }
