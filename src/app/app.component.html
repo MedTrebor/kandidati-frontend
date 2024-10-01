@@ -3,7 +3,19 @@
         class="mat-elevation-z2 bg-primary-container"
         style="justify-content: center"
     >
-        <h1 class="color-primary">KANDIDATI</h1>
+        <div class="header-container">
+            <span class="color-primary">MENADŽER KANDIDATA</span>
+            @if (isSmall) {
+                <button mat-icon-button class="bg-surface color-primary">
+                    <mat-icon>person_add</mat-icon>
+                </button>
+            } @else {
+                <button mat-raised-button>
+                    <mat-icon>person_add</mat-icon>
+                    <span>Dodaj</span>
+                </button>
+            }
+        </div>
     </mat-toolbar>
 </header>
 <main>
