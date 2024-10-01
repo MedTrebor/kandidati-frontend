@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { BehaviorSubject, catchError, map, of } from 'rxjs'
 
-import { Candidate, CandidateFetch } from '../model/candidate'
+import { Candidate, CandidateFetch, CandidateInsert } from '../model/candidate'
 
 @Injectable({ providedIn: 'root' })
 export class CandidateService {
@@ -20,6 +20,10 @@ export class CandidateService {
     candidates$ = new BehaviorSubject<Candidate[]>([])
 
     constructor(private http: HttpClient) {
+        this.restart()
+    }
+
+    restart() {
         this.getCount().subscribe(count => {
             if (typeof count != 'number') {
                 console.error(count)
@@ -154,6 +158,24 @@ export class CandidateService {
             this.oldRange = range
             this.candidates$.next(candidates)
         })
+    }
+
+    insertCandidate(candidate: CandidateInsert) {
+        return this.http
+            .post(this.url, candidate, {
+                observe: 'response',
+                responseType: 'text',
+            })
+            .pipe(catchError((err: HttpErrorResponse) => of(err)))
+    }
+
+    updateCandidate(jmbg: string, candidate: CandidateInsert) {
+        return this.http
+            .put(this.url + `?jmbg=${jmbg}`, candidate, {
+                observe: 'response',
+                responseType: 'text',
+            })
+            .pipe(catchError((err: HttpErrorResponse) => of(err)))
     }
 
     private inRange(index: number) {

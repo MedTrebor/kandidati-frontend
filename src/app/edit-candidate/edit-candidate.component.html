@@ -1,0 +1,70 @@
+<h2 mat-dialog-title>
+    @if (data.edit) {
+        Ažuriraj
+    } @else {
+        Dodaj
+    }
+    Kandidata
+</h2>
+<mat-dialog-content style="padding-top: 1rem">
+    <form [formGroup]="candidateForm">
+        <div class="column-2">
+            <mat-form-field style="width: 100%">
+                <mat-label>Ime</mat-label>
+                <input matInput type="text" formControlName="firstName" />
+            </mat-form-field>
+            <mat-form-field style="width: 100%">
+                <mat-label>Prezime</mat-label>
+                <input matInput type="text" formControlName="lastName" />
+            </mat-form-field>
+        </div>
+        <div class="column-2">
+            <mat-form-field style="width: 100%">
+                <mat-label>JMBG</mat-label>
+                <input matInput type="text" formControlName="jmbg" />
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%">
+                <mat-label>Telefon</mat-label>
+                <input matInput type="tel" formControlName="phone" />
+            </mat-form-field>
+        </div>
+        <mat-form-field style="width: 100%">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" />
+        </mat-form-field>
+        <div class="column-2">
+            <mat-form-field style="width: 50%">
+                <mat-label>Godina rođenja</mat-label>
+                <input
+                    matInput
+                    type="number"
+                    min="1900"
+                    max="2024"
+                    step="1"
+                    formControlName="birthYear"
+                />
+            </mat-form-field>
+
+            @if (data.edit) {
+                <mat-slide-toggle formControlName="employed" style="width: 50%">
+                    @if (candidateForm.value.employed) {
+                        Zaposlen(a)
+                    } @else {
+                        Nezaposlen(a)
+                    }
+                </mat-slide-toggle>
+            }
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>OTKAŽI</button>
+    <button mat-raised-button type="submit" (click)="submit()">
+        @if (data.edit) {
+            AŽURIRAJ
+        } @else {
+            DODAJ
+        }
+    </button>
+</mat-dialog-actions>
