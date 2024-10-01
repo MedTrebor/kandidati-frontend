@@ -178,6 +178,16 @@ export class CandidateService {
             .pipe(catchError((err: HttpErrorResponse) => of(err)))
     }
 
+    deleteCandidate(jmbg: string) {
+        return this.http
+            .delete(this.url, {
+                body: [jmbg],
+                observe: 'response',
+                responseType: 'text',
+            })
+            .pipe(catchError((err: HttpErrorResponse) => of(err)))
+    }
+
     private inRange(index: number) {
         return index >= this.oldRange.start && index < this.oldRange.end
     }

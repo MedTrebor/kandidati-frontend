@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Izbriši Kandidata</h2>
+<mat-dialog-content
+    >Da li ste sigurni da želite da izbrišete kandidata?</mat-dialog-content
+>
+<mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="false">OTKAŽI</button>
+    <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial>
+        IZBRIŠI
+    </button>
+</mat-dialog-actions>

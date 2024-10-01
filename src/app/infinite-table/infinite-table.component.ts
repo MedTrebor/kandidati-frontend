@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { CandidateService } from '../service/candidate.service'
 import { Candidate } from '../model/candidate'
 import { EditCandidateComponent } from '../edit-candidate/edit-candidate.component'
+import { DeleteCandidateComponent } from '../delete-candidate/delete-candidate.component'
 
 @Component({
     selector: 'app-infinite-table',
@@ -65,16 +66,40 @@ export class InfiniteTableComponent implements OnDestroy {
     }
 
     editHandler(candidate: Candidate) {
-        this.expendedCandidate = null
         this.dialog
             .open(EditCandidateComponent, {
                 data: { edit: true, candidate },
             })
             .afterClosed()
             .subscribe((data?: { success: boolean }) => {
+                this.expendedCandidate = null
                 if (!data) return
-                const success = data.success ? 'uspešno' : 'neuspešno'
-                this.snackbar.open(`Kandidat je ${success} ažuriran.`)
+                const message = data.success
+                    ? 'Kandidat je uspešno ažuriran.'
+                    : 'Greška. Kandidat nije ažuriran.'
+                this.snackbar.open(message)
+            })
+    }
+
+    deleteHandler(candidate: Candidate) {
+        this.dialog
+            .open(DeleteCandidateComponent)
+            .afterClosed()
+            .subscribe(confirmation => {
+                this.expendedCandidate = null
+                if (confirmation)
+                    this.candidateService
+                        .deleteCandidate(candidate.jmbg)
+                        .subscribe(res => {
+                            let message: string
+                            if (res.ok) {
+                                message = 'Kandidat je uspešno izbririsan.'
+                                this.candidateService.restart()
+                            } else {
+                                message = 'Greška. Kandidat nije izbrisan.'
+                            }
+                            this.snackbar.open(message)
+                        })
             })
     }
 

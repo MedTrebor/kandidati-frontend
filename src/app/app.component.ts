@@ -58,8 +58,10 @@ export class AppComponent implements OnDestroy {
             .afterClosed()
             .subscribe((data?: { success: boolean }) => {
                 if (!data) return
-                const success = data.success ? 'uspešno' : 'neuspešno'
-                this.snackbar.open(`Kandidat je ${success} dodat.`)
+                const message = data.success
+                    ? 'Kandidat je uspešno dodat.'
+                    : 'Greška. Kandidat nije dodat.'
+                this.snackbar.open(message)
             })
     }
 
