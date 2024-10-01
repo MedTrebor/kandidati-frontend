@@ -3,9 +3,12 @@ import { MatToolbarModule } from '@angular/material/toolbar'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
+import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { Subscription } from 'rxjs'
 
 import { InfiniteTableComponent } from './infinite-table/infinite-table.component'
+import { EditCandidateComponent } from './edit-candidate/edit-candidate.component'
 
 @Component({
     selector: 'app-root',
@@ -24,7 +27,11 @@ export class AppComponent implements OnDestroy {
 
     private breakpointSub: Subscription
 
-    constructor(brakepointObserver: BreakpointObserver) {
+    constructor(
+        brakepointObserver: BreakpointObserver,
+        private dialog: MatDialog,
+        private snackbar: MatSnackBar,
+    ) {
         this.breakpointSub = brakepointObserver
             .observe([
                 Breakpoints.XSmall,
@@ -42,6 +49,17 @@ export class AppComponent implements OnDestroy {
                 } else {
                     this.isSmall = false
                 }
+            })
+    }
+
+    addCandidate() {
+        this.dialog
+            .open(EditCandidateComponent, { data: { edit: false } })
+            .afterClosed()
+            .subscribe((data?: { success: boolean }) => {
+                if (!data) return
+                const success = data.success ? 'uspešno' : 'neuspešno'
+                this.snackbar.open(`Kandidat je ${success} dodat.`)
             })
     }
 

@@ -6,11 +6,15 @@
         <div class="header-container">
             <span class="color-primary">MENADŽER KANDIDATA</span>
             @if (isSmall) {
-                <button mat-icon-button class="bg-surface color-primary">
+                <button
+                    mat-icon-button
+                    class="bg-surface color-primary"
+                    (click)="addCandidate()"
+                >
                     <mat-icon>person_add</mat-icon>
                 </button>
             } @else {
-                <button mat-raised-button>
+                <button mat-raised-button (click)="addCandidate()">
                     <mat-icon>person_add</mat-icon>
                     <span>Dodaj</span>
                 </button>
