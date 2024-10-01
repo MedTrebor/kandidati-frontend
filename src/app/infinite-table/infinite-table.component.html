@@ -27,9 +27,7 @@
                     <th scope="col">Zaposlen(a)</th>
                     <th scope="col">Ažurirano</th>
                 }
-                @if (breakpoint !== 'l') {
-                    <th scope="col"></th>
-                }
+                <th scope="col"></th>
             </tr>
         </thead>
 
@@ -57,7 +55,24 @@
                             {{ candidate.lastUpdated | date: 'dd.MM.yyyy.' }}
                         </td>
                     }
-                    @if (breakpoint !== 'l') {
+                    @if (breakpoint === 'l') {
+                        <td>
+                            <button
+                                mat-icon-button
+                                matTooltip="Ažuriraj"
+                                matTooltipPosition="above"
+                            >
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button
+                                mat-icon-button
+                                matTooltip="Izbriši"
+                                matTooltipPosition="above"
+                            >
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    } @else {
                         <td style="text-align: center; width: 80px">
                             <button
                                 mat-icon-button
@@ -129,6 +144,22 @@
                                     </div>
                                 }
                             </div>
+                        </td>
+                        <td>
+                            <button
+                                mat-icon-button
+                                matTooltip="Ažuriraj"
+                                matTooltipPosition="above"
+                            >
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button
+                                mat-icon-button
+                                matTooltip="Izbriši"
+                                matTooltipPosition="above"
+                            >
+                                <mat-icon>delete</mat-icon>
+                            </button>
                         </td>
                     </tr>
                 }

@@ -3,11 +3,12 @@ import { InfiniteScrollDirective } from 'ngx-infinite-scroll'
 import { AsyncPipe, DatePipe } from '@angular/common'
 import { BreakpointObserver, Breakpoints as BP } from '@angular/cdk/layout'
 import { Subscription } from 'rxjs'
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 import { CandidateService } from '../service/candidate.service'
 import { Candidate } from '../model/candidate'
-import { MatButtonModule } from '@angular/material/button'
-import { MatIconModule } from '@angular/material/icon'
 
 @Component({
     selector: 'app-infinite-table',
@@ -18,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon'
         DatePipe,
         MatButtonModule,
         MatIconModule,
+        MatTooltipModule,
     ],
     templateUrl: './infinite-table.component.html',
     styleUrl: './infinite-table.component.scss',
@@ -38,13 +40,13 @@ export class InfiniteTableComponent implements OnDestroy {
             .subscribe(({ breakpoints: bps }) => {
                 if (bps[BP.XSmall]) {
                     this.breakpoint = 'xs'
-                    this.colspan = 3
+                    this.colspan = 2
                 } else if (bps[BP.Small]) {
                     this.breakpoint = 's'
-                    this.colspan = 4
+                    this.colspan = 3
                 } else if (bps[BP.Medium]) {
                     this.breakpoint = 'm'
-                    this.colspan = 7
+                    this.colspan = 6
                 } else if (bps[BP.Large] || bps[BP.XLarge]) {
                     this.breakpoint = 'l'
                     this.colspan = 8
