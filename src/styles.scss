@@ -1,6 +1,6 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -14,11 +14,11 @@ $light-theme: mat.define-theme(
         color: (
             theme-type: light,
             primary: mat.$azure-palette,
-            tertiary: mat.$blue-palette
+            tertiary: mat.$blue-palette,
         ),
         density: (
-            scale: 0
-        )
+            scale: 0,
+        ),
     )
 );
 
@@ -27,11 +27,11 @@ $dark-theme: mat.define-theme(
         color: (
             theme-type: dark,
             primary: mat.$cyan-palette,
-            tertiary: mat.$orange-palette
+            tertiary: mat.$orange-palette,
         ),
         density: (
-            scale: 0
-        )
+            scale: 0,
+        ),
     )
 );
 
@@ -41,8 +41,27 @@ $dark-theme: mat.define-theme(
 :root {
     @include mat.all-component-themes($light-theme);
 
+    .bg-primary-container {
+        background-color: mat.get-theme-color($light-theme, primary-container);
+    }
+
+    .color-primary {
+        color: mat.get-theme-color($light-theme, primary);
+    }
+
     @media (prefers-color-scheme: dark) {
         @include mat.all-component-colors($dark-theme);
+
+        .bg-primary-container {
+            background-color: mat.get-theme-color(
+                $dark-theme,
+                primary-container
+            );
+        }
+
+        .color-primary {
+            color: mat.get-theme-color($dark-theme, primary);
+        }
     }
 }
 
@@ -59,5 +78,5 @@ body {
 }
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
