@@ -1,6 +1,6 @@
 .scroll-container {
     height: 80vh;
-    max-height: 1248px;
+    max-height: 1024px;
     width: 100%;
     overflow: auto;
     scrollbar-width: thin;
@@ -24,4 +24,17 @@ th {
 th,
 td {
     padding: 1rem;
+}
+
+.candidate-detail {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    overflow: hidden;
+    column-gap: 2rem;
+}
+
+.margin-sm {
+    margin-block-start: 0.5rem;
+    margin-block-end: 0.5rem;
 }

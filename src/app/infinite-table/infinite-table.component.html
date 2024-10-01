@@ -11,14 +11,25 @@
     <table>
         <thead class="bg-surface">
             <tr class="mat-elevation-z1">
-                <th scope="col">JMBG</th>
+                @if (breakpoint !== 'xs') {
+                    <th scope="col">JMBG</th>
+                }
                 <th scope="col">Ime</th>
                 <th scope="col">Prezime</th>
-                <th scope="col">Rođen(a)</th>
-                <th scope="col">Email</th>
-                <th scope="col">Telefon</th>
-                <th scope="col">Zaposlen(a)</th>
-                <th scope="col">Ažurirano</th>
+                @if (breakpoint === 'l' || breakpoint === 'm') {
+                    <th scope="col">Rođen(a)</th>
+                }
+                @if (breakpoint === 'l') {
+                    <th scope="col">Email</th>
+                    <th scope="col">Telefon</th>
+                }
+                @if (breakpoint === 'l' || breakpoint === 'm') {
+                    <th scope="col">Zaposlen(a)</th>
+                    <th scope="col">Ažurirano</th>
+                }
+                @if (breakpoint !== 'l') {
+                    <th scope="col"></th>
+                }
             </tr>
         </thead>
 
@@ -28,7 +39,9 @@
                 track candidate.jmbg
             ) {
                 <tr class="mat-elevation-z1">
-                    <td>{{ candidate.jmbg }}</td>
+                    @if (breakpoint !== 'xs') {
+                        <td>{{ candidate.jmbg }}</td>
+                    }
                     <td>{{ candidate.firstName }}</td>
                     <td>{{ candidate.lastName }}</td>
                     @if (breakpoint === 'l' || breakpoint === 'm') {
@@ -59,6 +72,66 @@
                         </td>
                     }
                 </tr>
+
+                @if (breakpoint !== 'l' && expendedCandidate === candidate) {
+                    <tr class="mat-elevation-z1">
+                        <td [colSpan]="colspan">
+                            <div class="candidate-detail">
+                                @if (breakpoint === 'xs') {
+                                    <div>
+                                        <h5 class="margin-sm">JMBG</h5>
+                                        <p class="margin-sm">
+                                            {{ candidate.jmbg }}
+                                        </p>
+                                    </div>
+                                }
+                                @if (
+                                    breakpoint === 's' || breakpoint === 'xs'
+                                ) {
+                                    <div>
+                                        <h5 class="margin-sm">Rođen(a)</h5>
+                                        <p class="margin-sm">
+                                            {{ candidate.birthYear }}.
+                                        </p>
+                                    </div>
+                                }
+                                <div>
+                                    <h5 class="margin-sm">Email</h5>
+                                    <p class="margin-sm">
+                                        {{ candidate.email }}
+                                    </p>
+                                </div>
+                                <div>
+                                    <h5 class="margin-sm">Telefon</h5>
+                                    <p class="margin-sm">
+                                        {{ candidate.phone }}
+                                    </p>
+                                </div>
+                                @if (
+                                    breakpoint === 's' || breakpoint === 'xs'
+                                ) {
+                                    <div>
+                                        <h5 class="margin-sm">Zaposlen(a)</h5>
+                                        <p class="margin-sm">
+                                            {{
+                                                candidate.employed ? 'da' : 'ne'
+                                            }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h5 class="margin-sm">Ažurirano</h5>
+                                        <p class="margin-sm">
+                                            {{
+                                                candidate.lastUpdated
+                                                    | date: 'dd.MM.yyyy.'
+                                            }}
+                                        </p>
+                                    </div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
             }
             @if (candidateService.candidates$.value.length === 0) {
                 <tr class="mat-elevation-z1">
