@@ -1,0 +1,17 @@
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+main {
+    min-height: calc(100% - 64px);
+    max-width: 1280px;
+    position: relative;
+    left: 50%;
+    top: 64px;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+    padding: 1rem;
+}

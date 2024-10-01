@@ -1,0 +1,27 @@
+.scroll-container {
+    height: 80vh;
+    max-height: 1248px;
+    width: 100%;
+    overflow: auto;
+    scrollbar-width: thin;
+}
+
+table {
+    width: 100%;
+    position: relative;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+th {
+    text-align: left;
+}
+
+th,
+td {
+    padding: 1rem;
+}

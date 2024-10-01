@@ -49,6 +49,15 @@ $dark-theme: mat.define-theme(
         color: mat.get-theme-color($light-theme, primary);
     }
 
+    .bg-surface {
+        background-color: mat.get-theme-color($light-theme, surface);
+    }
+
+    .scroll-container {
+        scrollbar-color: mat.get-theme-color($light-theme, surface-dim)
+            mat.get-theme-color($light-theme, surface);
+    }
+
     @media (prefers-color-scheme: dark) {
         @include mat.all-component-colors($dark-theme);
 
@@ -61,6 +70,15 @@ $dark-theme: mat.define-theme(
 
         .color-primary {
             color: mat.get-theme-color($dark-theme, primary);
+        }
+
+        .bg-surface {
+            background-color: mat.get-theme-color($dark-theme, surface);
+        }
+
+        .scroll-container {
+            scrollbar-color: mat.get-theme-color($dark-theme, surface-bright)
+                mat.get-theme-color($dark-theme, surface);
         }
     }
 }

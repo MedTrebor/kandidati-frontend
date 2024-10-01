@@ -1,0 +1,72 @@
+<div
+    infiniteScroll
+    [scrollWindow]="false"
+    [alwaysCallback]="true"
+    [infiniteScrollDistance]="2"
+    [infiniteScrollUpDistance]="2.5"
+    (scrolled)="candidateService.nextPage()"
+    (scrolledUp)="candidateService.previousPage()"
+    class="scroll-container"
+>
+    <table>
+        <thead class="bg-surface">
+            <tr class="mat-elevation-z1">
+                <th scope="col">JMBG</th>
+                <th scope="col">Ime</th>
+                <th scope="col">Prezime</th>
+                <th scope="col">Rođen(a)</th>
+                <th scope="col">Email</th>
+                <th scope="col">Telefon</th>
+                <th scope="col">Zaposlen(a)</th>
+                <th scope="col">Ažurirano</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (
+                candidate of candidateService.candidates$ | async;
+                track candidate.jmbg
+            ) {
+                <tr class="mat-elevation-z1">
+                    <td>{{ candidate.jmbg }}</td>
+                    <td>{{ candidate.firstName }}</td>
+                    <td>{{ candidate.lastName }}</td>
+                    @if (breakpoint === 'l' || breakpoint === 'm') {
+                        <td>{{ candidate.birthYear }}.</td>
+                    }
+                    @if (breakpoint === 'l') {
+                        <td>{{ candidate.email }}</td>
+                        <td>{{ candidate.phone }}</td>
+                    }
+                    @if (breakpoint === 'l' || breakpoint === 'm') {
+                        <td>{{ candidate.employed ? 'da' : 'ne' }}</td>
+                        <td>
+                            {{ candidate.lastUpdated | date: 'dd.MM.yyyy.' }}
+                        </td>
+                    }
+                    @if (breakpoint !== 'l') {
+                        <td style="text-align: center; width: 80px">
+                            <button
+                                mat-icon-button
+                                (click)="expendHandler(candidate)"
+                            >
+                                @if (expendedCandidate === candidate) {
+                                    <mat-icon>keyboard_arrow_up</mat-icon>
+                                } @else {
+                                    <mat-icon>keyboard_arrow_down</mat-icon>
+                                }
+                            </button>
+                        </td>
+                    }
+                </tr>
+            }
+            @if (candidateService.candidates$.value.length === 0) {
+                <tr class="mat-elevation-z1">
+                    <td [colSpan]="colspan" style="text-align: center">
+                        <h2>NEMA KANDIDATA</h2>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
